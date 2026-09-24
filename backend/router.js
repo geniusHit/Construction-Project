@@ -5,4 +5,18 @@ const multer = require("multer")
 const path = require("path");
 const mongoose = require('mongoose');
 
+router.post("/add-user", controller.addUser)
+
+router.post("/send-signup-otp", controller.sendSignupOtp)
+
+router.post("/login-user", controller.loginUser)
+
+router.post("/create-material", controller.createMaterial)
+
+router.post("/get-materials", controller.getMaterials)
+
+router.post("/get-current-login", controller.getCurrentLogin)
+
+router.post("/compare-prices", controller.comparePrices)
+
 module.exports = router

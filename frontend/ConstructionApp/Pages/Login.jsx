@@ -1,70 +1,88 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
-    FaGoogle,
-    FaApple,
-    FaEnvelope,
-    FaLock,
     FaArrowRight,
-    FaTruck,
-    FaHeadset,
-    FaShieldAlt,
-    FaFacebookF,
-    FaInstagram,
-    FaYoutube,
-    FaTwitter,
 } from "react-icons/fa";
 import { useForm } from "react-hook-form"
 import { useNavigate } from "react-router-dom"
 // import "../Style/LoginStyle.css";
 // import Logo from '../assets/Logo.png'
 import { Link } from "react-router-dom"
-// import livingRoom from '../assets/ChatGPT Image Jun 11, 2026, 05_03_13 PM.png'
 import Footer from "../Components/Footer";
 
 const Login = () => {
-    const { register, handleSubmit } = useForm()
+    const { register, handleSubmit, formState: {errors}, setError } = useForm()
     const [isLogin, setIsLogin] = useState(false)
+    const [IP, setIP] = useState("")
     const navigate = useNavigate()
+
+    useEffect(() => {
+        getIP()
+    }, [])
+    const getIP = async () => {
+        const response = await fetch("https://api.ipify.org?format=json");
+        const data = await response.json();
+        setIP(data.ip)
+    };
 
     const submit = async (data) => {
         console.log("data = ", data)
+        let expiry = new Date();
+        expiry.setDate(expiry.getDate() + 1);
 
-        const login = await fetch("http://localhost:8000/login-user", {
+        const login = await fetch("http://localhost:8001/login-user", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify(data)
+            body: JSON.stringify({ ...data, IP: IP, expiry: expiry })
         })
 
         const result = await login.json()
-        console.log("result = ", result)
-        setIsLogin(true);
-        localStorage.setItem("isLogin", true);
-        localStorage.setItem("jwtToken", result.jwtToken);
+        console.log("result : ", result)
+        
+        if (result?.success !== true) {
+            setError("password", {
+                message: "Incorrect password"
+            })
+            throw new Error("Incorrect password")
+        }
+
+        navigate("/")
     }
-
-    console.log("isLogin = ", isLogin)
-    console.log("localStorage.getItem(isLogin) = ", localStorage.getItem("isLogin"))
-    console.log("localStorage.getItem(name) = ", localStorage.getItem("name"))
-
-    // localStorage.removeItem("isLogin")
 
     return (
         <>
             <div className="login-page">
-
                 {/* Hero Section */}
-                <div className="login-container" style={{ backgroundImage: `url(${livingRoom})` }}>
+                <div className="login-container">
 
                     {/* Left Side */}
                     <div
                         className="login-left"
                     >
+
+                        <br />
+                        <Link to="/">
+                            <div className="logo-area">
+                                <div className="logo-mark">
+                                    <span>▥</span>
+                                </div>
+
+                                <div>
+                                    <div className="logo-text">
+                                        Construct<span>Price</span>
+                                    </div>
+                                    <div className="logo-tagline">
+                                        Compare. Save. Build Better.
+                                    </div>
+                                </div>
+                            </div>
+                        </Link>
+
                         <div className="overlay-content">
                             <Link to="/">
                                 <div className="logo">
-                                    <img src={Logo} width="200" />
+                                    <img width="200" />
                                 </div>
                             </Link>
 
@@ -82,10 +100,7 @@ const Login = () => {
                     <div className="login-box">
                         <div className="login-card">
 
-                            <h2>Login to Your Account</h2>
-                            <p className="subtitle">
-                                Welcome back! Please enter your details.
-                            </p>
+                            <h2>Login to Your Account</h2> <br />
 
                             <form onSubmit={handleSubmit(submit)}>
 
@@ -104,18 +119,13 @@ const Login = () => {
                                         <input
                                             type="password"
                                             placeholder="Enter your password"
-                                            {...register("password")}
+                                            {...register("password", {
+                                                required: { value: true, message: "Password is required" },
+                                            })}
                                         />
                                     </div>
-                                </div>
 
-                                <div className="login-options">
-                                    <label>
-                                        <input type="checkbox" />
-                                        Remember me
-                                    </label>
-
-                                    <a href="/">Forgot Password?</a>
+                                    <div className="error">{errors?.password?.message}</div>
                                 </div>
 
                                 <button className="login-btn">
@@ -129,42 +139,9 @@ const Login = () => {
                         </div>
                     </div>
                 </div>
-
-                {/* Features */}
-                <div className="features">
-
-                    <div className="feature">
-                        <FaShieldAlt />
-                        <div>
-                            <h4>Secure & Safe</h4>
-                            <p>Your data is protected with top-notch security.</p>
-                        </div>
-                    </div>
-
-                    <div className="feature">
-                        <FaTruck />
-                        <div>
-                            <h4>Hassle-Free Rentals</h4>
-                            <p>Quick and easy furniture rentals at your fingertips.</p>
-                        </div>
-                    </div>
-
-                    <div className="feature">
-                        <FaHeadset />
-                        <div>
-                            <h4>24/7 Support</h4>
-                            <p>We're here to help you anytime.</p>
-                        </div>
-                    </div>
-                </div>
             </div>
 
-            {/* Footer */}
             <Footer />
-
-            <div className="copyright">
-                © 2024 FurniRent. All rights reserved.
-            </div>
         </>
     );
 };

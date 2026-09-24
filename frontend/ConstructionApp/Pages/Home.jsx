@@ -1,10 +1,7 @@
 import React from 'react'
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import NavBar from '../Components/NavBar'
 import Footer from '../Components/Footer'
-import Login from './Login'
-import Signup from './Signup'
-
+import { useState } from 'react';
 
 const marketData = [
   {
@@ -111,7 +108,37 @@ const trends = [
   },
 ];
 
-function Hero() {
+const API_URL =
+  window.location.hostname === "localhost"
+    ? "http://localhost:8001"
+    : "https://rental-project-backend.vercel.app";
+
+function Hero({ searchKeys, setSearchKeys, products, setProducts }) {
+  const [materialActive, setMaterialActive] = useState({
+    cement: false,
+    tmt: false,
+    bricks: false,
+    sand: false,
+    aggregates: false
+  })
+
+  const comparePrices = async () => {
+    const compare = await fetch(`${API_URL}/compare-prices`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(searchKeys)
+    })
+
+    const result = await compare.json()
+    console.log("result : ", result)
+    setProducts(result)
+  }
+
+  console.log("products : ", products)
+  console.log("materialActive : ", materialActive)
+
   return (
     <section className="hero">
       <div className="hero-background">
@@ -151,16 +178,41 @@ function Hero() {
                 <input
                   type="text"
                   placeholder="e.g., OPC 53 Grade Cement, 12mm TMT Rebar"
+                  onChange={(e) => setSearchKeys(prev => ({ ...prev, text: e.target.value }))}
                 />
               </div>
 
               <div className="popular-tags">
-                <span>Popular:</span>
-                <button>Cement</button>
-                <button>TMT Rebar</button>
-                <button>Bricks</button>
-                <button>Sand</button>
-                <button>Aggregates</button>
+                <button className={materialActive?.cement === true ? `!border !border-[#1253dc] !text-[#1253dc]` : ``} onClick={
+                  (e) => {
+                    setSearchKeys(prev => ({ ...prev, category: "cement" }))
+                    setMaterialActive({ cement: true, tmt: false, bricks: false, sand: false, aggregates: false })
+                  }
+                }>Cement</button>
+                <button className={materialActive?.tmt === true ? `!border !border-[#1253dc] !text-[#1253dc]` : ``} onClick={
+                  (e) => {
+                    setSearchKeys(prev => ({ ...prev, category: "tmt rebar" }))
+                    setMaterialActive({ cement: false, tmt: true, bricks: false, sand: false, aggregates: false })
+                  }
+                }>TMT Rebar</button>
+                <button className={materialActive?.bricks === true ? `!border !border-[#1253dc] !text-[#1253dc]` : ``} onClick={
+                  (e) => {
+                    setSearchKeys(prev => ({ ...prev, category: "bricks" }))
+                    setMaterialActive({ cement: false, tmt: false, bricks: true, sand: false, aggregates: false })
+                  }
+                }>Bricks</button>
+                <button className={materialActive?.sand === true ? `!border !border-[#1253dc] !text-[#1253dc]` : ``} onClick={
+                  (e) => {
+                    setSearchKeys(prev => ({ ...prev, category: "sand" }))
+                    setMaterialActive({ cement: false, tmt: false, bricks: false, sand: true, aggregates: false })
+                  }
+                }>Sand</button>
+                <button className={materialActive?.aggregates === true ? `!border !border-[#1253dc] !text-[#1253dc]` : ``} onClick={
+                  (e) => {
+                    setSearchKeys(prev => ({ ...prev, category: "aggregates" }))
+                    setMaterialActive({ cement: false, tmt: false, bricks: false, sand: false, aggregates: true })
+                  }
+                }>Aggregates</button>
               </div>
             </div>
 
@@ -170,14 +222,14 @@ function Hero() {
               <div className="input-box">
                 <span className="location-icon">●</span>
                 <input
-                  type="text"
+                  type="number"
                   placeholder="Enter city or pin code"
+                  onChange={(e) => setSearchKeys(prev => ({ ...prev, pincode: e.target.value }))}
                 />
-                <span className="target-icon">◎</span>
               </div>
             </div>
 
-            <button className="compare-btn">
+            <button className="compare-btn" onClick={comparePrices}>
               Compare Prices
               <span>→</span>
             </button>
@@ -252,6 +304,81 @@ function MarketSnapshot() {
         ))}
       </div>
     </section>
+  );
+}
+
+function ProductsSnapshot({ products }) {
+  return (
+    <section className="market-section">
+      <div className="section-heading">
+        <div>
+          <h2>
+            Materials
+          </h2>
+        </div>
+
+        <a href="#prices">
+          View All Prices →
+        </a>
+      </div>
+
+      <div className="market-grid">
+        {products.map((item, index) => (
+          <ProductsCard key={index} item={item} />
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function ProductsCard({ item }) {
+  return (
+    <div className="market-card">
+      <div className="market-icon">
+        {
+          item.category === "cement" ? <div>🌫️</div> :
+            item.category === "tmt" ? <div>▤</div> :
+              item.category === "bricks" ? <div>🧱</div> :
+                item.category === "aggregates" ? <div>⛰</div> : ""
+        }
+      </div>
+
+      <div className="market-main">
+        <div className="market-title">
+          {item.title}
+        </div>
+
+        <div className="market-unit">
+          ({item.unit})
+        </div>
+
+        <div className="market-price">
+          ₹{item.unitPrice}
+        </div>
+
+        <div className='text-[9px]'>
+          {item.brand}
+        </div>
+
+        {/* <div className="market-range">
+          <span className="low">
+            Low: <b>{item.low}</b>
+          </span>
+
+          <span className="avg">
+            Avg: <b>{item.avg}</b>
+          </span>
+
+          <span className="high">
+            High: <b>{item.high}</b>
+          </span>
+        </div> */}
+      </div>
+
+      <span className={`change ${item.direction}`}>
+        {item.change}
+      </span>
+    </div>
   );
 }
 
@@ -498,29 +625,47 @@ function Features() {
 }
 
 const Home = () => {
-    return (
-        <div>
-            <div className="app">
-                <NavBar />
+  const [searchKeys, setSearchKeys] = useState({
+    text: "",
+    category: "",
+    pincode: ""
+  })
 
-                <main>
-                    <Hero />
+  const [products, setProducts] = useState()
+  console.log("products : ", products)
+  console.log("searchKeys : ", searchKeys)
 
-                    <MarketSnapshot />
+  return (
+    <div>
+      <div className="app">
+        <NavBar />
 
-                    <div className="dashboard-grid">
-                        <Suppliers />
-                        <PriceTrends />
-                        <BulkQuote />
-                    </div>
+        <main>
+          <Hero searchKeys={searchKeys} setSearchKeys={setSearchKeys} products={products} setProducts={setProducts} />
 
-                    <Features />
-                </main>
+          {
+            products?.length > 0 ?
+              <ProductsSnapshot products={products} /> :
+              products !== undefined ?
+                <div className='text-center !py-[40px] text-gray '>No materials available for searched filters.</div> :
+                <div></div>
+          }
 
-                <Footer />
-            </div>
-        </div>
-    )
+          <MarketSnapshot />
+
+          <div className="dashboard-grid">
+            <Suppliers />
+            <PriceTrends />
+            <BulkQuote />
+          </div>
+
+          <Features />
+        </main>
+
+        <Footer />
+      </div>
+    </div>
+  )
 }
 
 export default Home

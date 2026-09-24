@@ -60,6 +60,12 @@ a {
   min-width: 315px;
 }
 
+.error {
+  color: gray;
+  font-size: 13px;
+  padding: 10px;
+}
+
 .logo-mark {
   width: 38px;
   height: 38px;
@@ -133,7 +139,8 @@ a {
   font-weight: 600;
 }
 
-.business-btn, .login-btn-nav {
+.business-btn,
+.login-btn-nav {
   color: var(--primary);
   border: 1px solid var(--primary);
   background: white;
@@ -154,12 +161,10 @@ a {
   min-height: 258px;
   overflow: hidden;
   background:
-    linear-gradient(
-      100deg,
+    linear-gradient(100deg,
       #fff4df 0%,
       #f8faff 48%,
-      #eaf3ff 100%
-    );
+      #eaf3ff 100%);
 }
 
 .hero-background {
@@ -173,13 +178,11 @@ a {
   position: absolute;
   bottom: -20px;
   border: 2px solid #6b7280;
-  background: repeating-linear-gradient(
-    90deg,
-    transparent 0,
-    transparent 15px,
-    #9ca3af 16px,
-    #9ca3af 17px
-  );
+  background: repeating-linear-gradient(90deg,
+      transparent 0,
+      transparent 15px,
+      #9ca3af 16px,
+      #9ca3af 17px);
 }
 
 .building-one {
@@ -351,11 +354,9 @@ a {
   border: 0;
   border-radius: 6px;
   color: white;
-  background: linear-gradient(
-    90deg,
-    #1253dc,
-    #145ee9
-  );
+  background: linear-gradient(90deg,
+      #1253dc,
+      #145ee9);
   font-size: 13px;
   font-weight: 700;
   display: flex;
@@ -542,12 +543,10 @@ a {
   border-radius: 7px;
   overflow: hidden;
   background:
-    linear-gradient(
-      135deg,
+    linear-gradient(135deg,
       #eaf1e5,
       #f5f2df 45%,
-      #e5edf5
-    );
+      #e5edf5);
   height: 100%;
 }
 
@@ -878,11 +877,9 @@ a {
   border-radius: 9px;
   padding: 17px;
   background:
-    linear-gradient(
-      145deg,
+    linear-gradient(145deg,
       #eef5ff,
-      #f5f8ff
-    );
+      #f5f8ff);
   min-height: 400px;
 }
 
@@ -904,7 +901,7 @@ a {
   margin-bottom: 6px;
 }
 
-.bulk-section > p {
+.bulk-section>p {
   font-size: 10px;
   line-height: 1.5;
   color: #475467;
@@ -1031,6 +1028,13 @@ a {
 /* =========================
    RESPONSIVE
 ========================= */
+
+.products{
+  display: grid;
+  grid-template-columns: 25% 25% 25% 25%;
+  padding: 14px 48px 0;
+  margin: auto;
+}
 
 @media (max-width: 1200px) {
   .header {
