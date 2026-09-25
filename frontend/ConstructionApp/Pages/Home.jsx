@@ -2,6 +2,8 @@ import React from 'react'
 import NavBar from '../Components/NavBar'
 import Footer from '../Components/Footer'
 import { useState } from 'react';
+import { useForm } from "react-hook-form"
+import { useEffect } from 'react';
 
 const marketData = [
   {
@@ -122,6 +124,7 @@ function Hero({ searchKeys, setSearchKeys, products, setProducts }) {
     aggregates: false
   })
 
+
   const comparePrices = async () => {
     const compare = await fetch(`${API_URL}/compare-prices`, {
       method: "POST",
@@ -135,9 +138,6 @@ function Hero({ searchKeys, setSearchKeys, products, setProducts }) {
     console.log("result : ", result)
     setProducts(result)
   }
-
-  console.log("products : ", products)
-  console.log("materialActive : ", materialActive)
 
   return (
     <section className="hero">
@@ -406,52 +406,238 @@ function MapPanel() {
   );
 }
 
-function SupplierList() {
+function SupplierList({ recentPr }) {
+  const [quoteDetails, setQuoteDetails] = useState()
+  console.log("quoteDetails : ", quoteDetails)
+  const [showMessage, setShowMessage] = useState(false)
+  const { register, handleSubmit, formState: { errors } } = useForm()
+
+  const requestQuote = async (data) => {
+    console.log("data : ", data)
+
+    const request = await fetch(`${API_URL}/quote-request`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ ...data, ...quoteDetails })
+    })
+
+  }
+
   return (
     <div className="supplier-list">
-      {suppliers.map((supplier) => (
-        <div className="supplier-item" key={supplier.name}>
+      {recentPr.map((supplier, index) => (
+        <div className="supplier-item" key={index}>
           <div className="supplier-image">
             🏪
           </div>
 
           <div className="supplier-details">
             <div className="supplier-name">
-              {supplier.name}
+              {supplier.user.supplier}
               <span className="verified">
                 Verified
               </span>
             </div>
-
-            <div className="supplier-location">
-              {supplier.distance} • {supplier.location}
-            </div>
-
-            <div className="supplier-price-info">
-              <span>{supplier.material}</span>
-              <strong>
-                {supplier.price}
-                <small>{supplier.unit}</small>
-              </strong>
-            </div>
           </div>
 
           <div className="supplier-actions">
-            <button className="call-btn">
+            <button className="call-btn" onClick={async () => {
+              await navigator.clipboard.writeText(supplier.user.phone)
+            }}>
               ☎ Call
             </button>
 
-            <button className="quote-btn">
+            <button className="quote-btn" onClick={
+              () => {
+                setShowMessage(true)
+                setQuoteDetails(supplier?.user)
+              }
+            }>
               Request Quote
             </button>
           </div>
         </div>
       ))}
+
+      {showMessage === true
+        &&
+        <div className="modal show d-block" tabIndex="-1">
+          <div className="modal-dialog">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title">Request Quote</h5>
+                <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" onClick={() => setShowMessage(false)}></button>
+              </div>
+              <div className="modal-body">
+                <form className='flex flex-col gap-y-[14px]' onSubmit={handleSubmit(requestQuote)}>
+                  <input type='text' value={quoteDetails?.supplier} readOnly className='border-bottom !text-[13px] p-1 w-full text-[#6c757d] focus:outline-none' />
+
+                  <input type='email' value={quoteDetails?.email} readOnly className='border-bottom !text-[13px] p-1 w-full text-[#6c757d] focus:outline-none' />
+
+                  <input type='text' value={quoteDetails?.phone} readOnly className='border-bottom !text-[13px] p-1 w-full text-[#6c757d] focus:outline-none' />
+
+                  <input type='text' value={quoteDetails?.pincode} readOnly className='border-bottom !text-[13px] p-1 w-full text-[#6c757d] focus:outline-none' />
+
+                  <input type='text' value={quoteDetails?.city} readOnly className='border-bottom !text-[13px] p-1 w-full text-[#6c757d] focus:outline-none' />
+
+                  <table className='w-full quote-table'>
+                    <tbody>
+                      <tr className='text-[13px]'>
+                        <td className='px-2'>Cement</td>
+                        <td className='px-2'>
+                          <div>
+                            <input type='number' className='border focus:outline-none p-1 w-[58%] rounded-sm'
+                              {...register("cementQuantity", {
+                                required: { value: true, message: "Cement quantity is required" }
+                              })}
+                            />
+                            <span className='!m-[10px]'>50kg bag</span>
+                          </div>
+                          <div className='text-[10px] text-[#6c757d] p-1 w-[58%]'>{errors?.cementQuantity?.message}</div>
+                        </td>
+                        <td className='px-2'>
+                          <input type='number' placeholder='Quote Price' className='border focus:outline-none p-1 w-[70px] rounded-sm w-full'
+                            {...register("cementPrice", {
+                              required: { value: true, message: "Cement Price is required" }
+                            })}
+                          />
+
+                          <div className='text-[10px] text-[#6c757d] p-1'>{errors?.cementPrice?.message}</div>
+                        </td>
+                      </tr>
+
+                      <tr className='text-[13px]'>
+                        <td className='px-2'>TMT Rebar</td>
+                        <td className='px-2'>
+                          <div>
+                            <input type='number' className='border focus:outline-none p-1 w-[58%] rounded-sm'
+                              {...register("tmtQuantity", {
+                                required: { value: true, message: "TMT Rebar quantity is required" }
+                              })}
+                            />
+                            <span className='!m-[10px]'>Pieces</span>
+                          </div>
+
+                          <div className='text-[10px] text-[#6c757d] p-1 w-[58%]'>{errors?.tmtQuantity?.message}</div>
+                        </td>
+                        <td className='px-2'>
+                          <input type='number' placeholder='Quote Price' className='border focus:outline-none p-1 w-[70px] rounded-sm w-full'
+                            {...register("tmtPrice", {
+                              required: { value: true, message: "TMT rebar price is required" }
+                            })}
+                          />
+
+                          <div className='text-[10px] text-[#6c757d] p-1'>{errors?.tmtPrice?.message}</div>
+                        </td>
+                      </tr>
+
+                      <tr className='text-[13px]'>
+                        <td className='px-2'>Bricks</td>
+                        <td className='px-2'>
+                          <div>
+                            <input type='number' className='border focus:outline-none p-1 w-[58%] rounded-sm'
+                              {...register("bricksQuantity", {
+                                required: { value: true, message: "Bricks quantity is required" }
+                              })}
+                            />
+                            <span className='!m-[10px]'>Pieces</span>
+                          </div>
+
+                          <div className='text-[10px] text-[#6c757d] p-1 w-[58%]'>{errors?.bricksQuantity?.message}</div>
+                        </td>
+                        <td className='px-2'>
+                          <input type='number' placeholder='Quote Price' className='border focus:outline-none p-1 w-[70px] rounded-sm w-full'
+                            {...register("bricksPrice", {
+                              required: { value: true, message: "Bricks price is required" }
+                            })}
+                          />
+
+                          <div className='text-[10px] text-[#6c757d] p-1'>{errors?.bricksPrice?.message}</div>
+                        </td>
+                      </tr>
+
+                      <tr className='text-[13px]'>
+                        <td className='px-2'>Sand</td>
+                        <td className='px-2'>
+                          <div>
+                            <input type='number' className='border focus:outline-none p-1 w-[58%] rounded-sm'
+                              {...register("sandQuantity", {
+                                required: { value: true, message: "Sand quantity is required" }
+                              })}
+                            />
+                            <span className='!m-[10px]'>Load Truck</span>
+                          </div>
+
+                          <div className='text-[10px] text-[#6c757d] p-1 w-[58%]'>{errors?.sandQuantity?.message}</div>
+                        </td>
+                        <td className='px-2'>
+                          <input type='number' placeholder='Quote Price' className='border focus:outline-none p-1 w-[70px] rounded-sm w-full'
+                            {...register("sandPrice", {
+                              required: { value: true, message: "Sand price is required" }
+                            })}
+                          />
+
+                          <div className='text-[10px] text-[#6c757d] p-1'>{errors?.sandPrice?.message}</div>
+                        </td>
+                      </tr>
+
+                      <tr className='text-[13px]'>
+                        <td className='px-2'>Aggregate</td>
+                        <td className='px-2'>
+                          <div>
+                            <input type='number' className='border focus:outline-none p-1 w-[58%] rounded-sm'
+                              {...register("aggregateQuantity", {
+                                required: { value: true, message: "Aggregate quantity is required" }
+                              })}
+                            />
+                            <span className='!m-[10px]'>Load Truck</span>
+                          </div>
+
+                          <div className='text-[10px] text-[#6c757d] p-1 w-[58%]'>{errors?.aggregateQuantity?.message}</div>
+                        </td>
+                        <td className='px-2'>
+                          <input type='number' placeholder='Quote Price' className='border focus:outline-none p-1 w-[70px] rounded-sm w-full'
+                            {...register("aggregatePrice", {
+                              required: { value: true, message: "Aggregate price is required" }
+                            })}
+                          />
+
+                          <div className='text-[10px] text-[#6c757d] p-1'>{errors?.aggregatePrice?.message}</div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+
+                  <div className="modal-footer">
+                    <input type="submit" className="btn text-white !text-[12px] !bg-[#1253dc]" value="Send Request" />
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      }
     </div>
   );
 }
 
 function Suppliers() {
+  const [recentPr, setRecentPr] = useState([])
+
+  const recentProds = async () => {
+    const prods = await fetch(`${API_URL}/recent-products`)
+    const result = await prods.json()
+    setRecentPr(result)
+  }
+
+  useEffect(() => {
+    recentProds()
+  }, [])
+
+  console.log(recentPr)
+
   return (
     <section className="suppliers-section" id="suppliers">
       <div className="section-heading">
@@ -464,7 +650,7 @@ function Suppliers() {
 
       <div className="supplier-content">
         <MapPanel />
-        <SupplierList />
+        <SupplierList recentPr={recentPr} />
       </div>
     </section>
   );
@@ -630,7 +816,7 @@ const Home = () => {
     category: "",
     pincode: ""
   })
-
+  const [location, setLocation] = useState()
   const [products, setProducts] = useState()
   console.log("products : ", products)
   console.log("searchKeys : ", searchKeys)

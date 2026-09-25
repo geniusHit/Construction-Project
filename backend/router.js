@@ -19,4 +19,8 @@ router.post("/get-current-login", controller.getCurrentLogin)
 
 router.post("/compare-prices", controller.comparePrices)
 
+router.get("/recent-products", controller.recentProducts)
+
+router.post("/quote-request", controller.quoteRequest)
+
 module.exports = router

@@ -23,6 +23,9 @@ const users = mongoose.Schema({
   city: {
     type: String
   },
+  supplier: {
+    type: String
+  },
 })
 const usersModel = mongoose.model("users", users)
 exports.addUser = async (req, res) => {
@@ -122,8 +125,8 @@ exports.getCurrentLogin = async (req, res) => {
     const user = await usersModel.findOne({ email: currentLogin?.email });
 
     if (user?.email) {
-      const { name, email, phone, pincode, city } = user;
-      res.json({ name, email, phone, pincode, city, success: true })
+      const { name, email, phone, pincode, city, supplier } = user;
+      res.json({ name, email, phone, pincode, city, supplier, success: true })
     }
     else {
       res.json({ success: false, message: "No logged in user." })
@@ -205,6 +208,9 @@ const materialSchema = new mongoose.Schema(
       city: {
         type: String
       },
+      supplier: {
+        type: String
+      }
     }
   },
   {
@@ -214,6 +220,8 @@ const materialSchema = new mongoose.Schema(
 
 const materialModel = mongoose.model("Material", materialSchema);
 exports.createMaterial = async (req, res) => {
+  console.log("req.body : ", req.body)
+
   try {
     const {
       title,
@@ -335,5 +343,60 @@ exports.comparePrices = async (req, res) => {
   }
   catch (err) {
     res.status(400).json({ success: false, message: err.message })
+  }
+}
+
+exports.recentProducts = async (req, res) => {
+  try {
+    const prods = await materialModel.find({}).limit(3);
+    res.json(prods)
+  }
+  catch (err) {
+    res.json({ success: false, message: err.message })
+  }
+}
+
+exports.quoteRequest = async (req, res) => {
+  try {
+    console.log("req.body : ", req.body)
+
+    const auth = nodemailer.createTransport({
+      service: "gmail",
+      secure: true,
+      port: 465,
+      auth: {
+        user: "rohitthakur792002@gmail.com",
+        pass: "omzd rsxw zwql xvrb"
+      }
+    })
+
+    const receiver = {
+      from: "rohitthakur792002@gmail.com",
+      to: `${req.body?.email}`,
+      subject: `ConstructPrice Quote request.`,
+      html: `
+        Cement -> Quantity: ${req.body?.cementQuantity} 50kg bag, Quote Price: Rs${req.body?.cementPrice}
+        <br><br>
+        TMT Bar -> Quantity: ${req.body?.tmtQuantity} Ton, Quote Price: Rs${req.body?.tmtPrice}
+        <br><br>
+        Bricks -> Quantity: ${req.body?.bricksQuantity} Pieces, Quote Price: Rs${req.body?.bricksPrice}
+        <br><br>
+        Sand -> Quantity: ${req.body?.sandQuantity} Load Truck, Quote Price: Rs${req.body?.sandPrice}
+        <br><br>
+        Aggregate -> Quantity: ${req.body?.aggregateQuantity} Load Truck, Quote Price: ${req.body?.aggregatePrice}
+      `
+    }
+
+    auth.sendMail(receiver, (error, emailResponse) => {
+      if (error) {
+        throw error;
+        return;
+      }
+      console.log("success!")
+      res.status(200).json({ signup_otp: a })
+    })
+  }
+  catch (err) {
+    res.status(400).json({ success: false, message: `Unable to send signup otp. ${err.message}` })
   }
 }

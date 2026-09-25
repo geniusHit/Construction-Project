@@ -1036,6 +1036,10 @@ a {
   margin: auto;
 }
 
+.quote-table td{
+  padding: 8px;
+}
+
 @media (max-width: 1200px) {
   .header {
     padding: 0 25px;

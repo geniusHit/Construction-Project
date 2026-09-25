@@ -36,6 +36,7 @@ const Signup = () => {
     // }
 
     const submit = async (data) => {
+        console.log("data : ", data)
         setUserData(data)
 
         let expiry = new Date();
@@ -216,6 +217,18 @@ const Signup = () => {
                                         className="input-box"
                                     />
                                     <div className="error">{errors?.city?.message}</div>
+                                </div>
+
+                                <div className="input-group">
+                                    <input
+                                        type="text"
+                                        placeholder="Supplier Name"
+                                        {...register("supplier", {
+                                            required: { value: true, message: "Supplier Name is required" }
+                                        })}
+                                        className="input-box"
+                                    />
+                                    <div className="error">{errors?.supplier?.message}</div>
                                 </div>
 
                                 <button className="login-btn">
