@@ -83,7 +83,7 @@ export default function AddMaterial() {
         user: currentLogin
       };
 
-      const response = await fetch("http://localhost:8001/create-material", {
+      const response = await fetch(`${API_URL}/create-material`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -148,9 +148,7 @@ export default function AddMaterial() {
         </div>
 
         <form className="grid-container" onSubmit={handleSubmit(onSubmit)}>
-          {/* Main Input Column */}
           <div className="form-main">
-            {/* Basic Details */}
             <section className="form-card">
               <div className="card-title">
                 <i className="fa-solid fa-layer-group"></i>
@@ -244,7 +242,6 @@ export default function AddMaterial() {
               </div>
             </section>
 
-            {/* Pricing & Units */}
             <section className="form-card">
               <div className="card-title">
                 <i className="fa-solid fa-indian-rupee-sign"></i>
@@ -335,7 +332,6 @@ export default function AddMaterial() {
             </section>
           </div>
 
-          {/* Right Live Preview & CTA Sidebar */}
           <aside className="sidebar-sticky">
             <div className="preview-card">
               <h3>Live Marketplace Preview</h3>

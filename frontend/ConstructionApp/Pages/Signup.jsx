@@ -141,6 +141,7 @@ const Signup = () => {
                                             required: { value: true, message: "Full Name is required" }
                                         })}
                                         className="input-box"
+                                        readOnly={disableSignup}
                                     />
                                     <div className="error">{errors?.name?.message}</div>
                                 </div>
@@ -153,7 +154,7 @@ const Signup = () => {
                                             required: { value: true, message: "Email is required" }
                                         })}
                                         className="input-box"
-
+                                        readOnly={disableSignup}
                                     />
                                     <div className="error">{errors?.email?.message}</div>
                                 </div>
@@ -166,6 +167,7 @@ const Signup = () => {
                                             required: { value: true, message: "Phone is required" }
                                         })}
                                         className="input-box"
+                                        readOnly={disableSignup}
                                     />
                                     <div className="error">{errors?.phone?.message}</div>
                                 </div>
@@ -178,6 +180,7 @@ const Signup = () => {
                                             required: { value: true, message: "Password is required" }
                                         })}
                                         className="input-box"
+                                        readOnly={disableSignup}
                                     />
                                     <div className="error">{errors?.password?.message}</div>
                                 </div>
@@ -190,6 +193,7 @@ const Signup = () => {
                                             required: { value: true, message: "Pin code is required" }
                                         })}
                                         className="input-box"
+                                        readOnly={disableSignup}
                                     />
                                     <div className="error">{errors?.pincode?.message}</div>
                                 </div>
@@ -202,6 +206,7 @@ const Signup = () => {
                                             required: { value: true, message: "City is required" }
                                         })}
                                         className="input-box"
+                                        readOnly={disableSignup}
                                     />
                                     <div className="error">{errors?.city?.message}</div>
                                 </div>
@@ -214,6 +219,7 @@ const Signup = () => {
                                             required: { value: true, message: "Supplier Name is required" }
                                         })}
                                         className="input-box"
+                                        readOnly={disableSignup}
                                     />
                                     <div className="error">{errors?.supplier?.message}</div>
                                 </div>
