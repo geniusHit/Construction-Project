@@ -11,7 +11,8 @@ const Signup = () => {
     const API_URL =
         window.location.hostname === "localhost"
             ? "http://localhost:8001"
-            : "https://rental-project-backend.vercel.app";
+            : "https://construction-project-gll3.vercel.app/";
+            
     const { register, handleSubmit, formState: { errors } } = useForm({
         defaultValues: {
             otp: ""
