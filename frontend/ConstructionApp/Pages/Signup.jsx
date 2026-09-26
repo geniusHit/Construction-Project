@@ -224,7 +224,9 @@ const Signup = () => {
                                     <div className="error">{errors?.supplier?.message}</div>
                                 </div>
 
-                                <button className="login-btn">
+                                <button className="login-btn"
+                                    disabled={disableSignup}
+                                >
                                     Send Otp <FaArrowRight />
                                 </button>
 
