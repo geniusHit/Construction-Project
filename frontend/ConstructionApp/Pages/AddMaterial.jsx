@@ -31,7 +31,7 @@ export default function AddMaterial() {
   const API_URL =
     window.location.hostname === "localhost"
       ? "http://localhost:8001"
-      : "https://construction-project-gll3.vercel.app/";
+      : "https://construction-project-gll3.vercel.app";
 
   const [selectedTag, setSelectedTag] = useState("Cement");
   const [images, setImages] = useState([]);

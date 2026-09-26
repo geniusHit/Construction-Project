@@ -5,7 +5,7 @@ const NavBar = () => {
     const API_URL =
         window.location.hostname === "localhost"
             ? "http://localhost:8001"
-            : "https://construction-project-gll3.vercel.app/";
+            : "https://construction-project-gll3.vercel.app";
 
     const [currentLogin, setCurrentLogin] = useState()
     const [IP, setIP] = useState()
