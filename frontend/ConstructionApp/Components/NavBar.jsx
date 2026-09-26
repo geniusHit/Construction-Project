@@ -30,7 +30,7 @@ const NavBar = () => {
 
     useEffect(() => {
         getIP()
-        // getLocation()
+        getLocation()
     }, [])
     const getIP = async () => {
         const response = await fetch("https://api.ipify.org?format=json");
@@ -40,15 +40,27 @@ const NavBar = () => {
 
     console.log("currentLogin : ", currentLogin)
 
-    // const getLocation = async () => {
-    //     const response = await fetch("https://ipapi.co/json/");
-    //     const data = await response.json();
+    const getLocation = () => {
+        navigator.geolocation.getCurrentPosition(
+            async (position) => {
+                const { latitude, longitude } = position.coords;
 
-    //     setLocation(data)
-    //     console.log("data : ", data)
-    //     console.log("City:", data.city);
-    //     console.log("Pincode:", data.postal);
-    // };
+                const response = await fetch(
+                    `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`
+                );
+
+                const data = await response.json();
+                console.log("data from getLocation : ", data)
+
+                setLocation(data);
+            },
+            (error) => {
+                console.error(error);
+            }
+        ); 
+    };
+
+    console.log("location : ", location)
 
     return (
         <div>
@@ -68,7 +80,7 @@ const NavBar = () => {
 
                 <div className="location-selector">
                     <span className="pin">●</span>
-                    <span>{location?.city}, {location?.region}</span>
+                    <span>{location?.address?.county}, {location?.address?.state}, {location?.address?.country}</span>
                 </div>
 
                 <nav className="navigation">
