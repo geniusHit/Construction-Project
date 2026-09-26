@@ -1,4 +1,3 @@
-import React from 'react'
 import NavBar from '../Components/NavBar'
 import Footer from '../Components/Footer'
 import { useState } from 'react';
@@ -49,33 +48,6 @@ const marketData = [
     change: "↑ 1.6%",
     direction: "up",
     icon: "⛰",
-  },
-];
-
-const suppliers = [
-  {
-    name: "Sri Venkateshwara Building Materials",
-    location: "Hebbal, Bangalore",
-    distance: "4.2 km",
-    material: "OPC 53 Cement",
-    price: "₹405",
-    unit: "/bag",
-  },
-  {
-    name: "Chamundi Steel & Cement Yard",
-    location: "Nagavara, Bangalore",
-    distance: "6.1 km",
-    material: "TMT Rebar 12mm",
-    price: "₹65,500",
-    unit: "/ton",
-  },
-  {
-    name: "Mahaveer Bricks & Aggregates",
-    location: "Hennur, Bangalore",
-    distance: "7.8 km",
-    material: "Red Bricks",
-    price: "₹8,000",
-    unit: "/1000 pcs",
   },
 ];
 
@@ -358,20 +330,6 @@ function ProductsCard({ item }) {
         <div className='text-[9px]'>
           {item.brand}
         </div>
-
-        {/* <div className="market-range">
-          <span className="low">
-            Low: <b>{item.low}</b>
-          </span>
-
-          <span className="avg">
-            Avg: <b>{item.avg}</b>
-          </span>
-
-          <span className="high">
-            High: <b>{item.high}</b>
-          </span>
-        </div> */}
       </div>
 
       <span className={`change ${item.direction}`}>
