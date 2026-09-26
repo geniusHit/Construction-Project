@@ -162,7 +162,7 @@ export default function AddMaterial() {
                 <label htmlFor="title">
                   Material / Product Title <span className="req">*</span>
                 </label>
-                <div className="input-wrapper has-icon">
+                {/* <div className="input-wrapper has-icon">
                   <i className="fa-solid fa-cube prefix-icon"></i>
                   <input
                     id="title"
@@ -173,7 +173,7 @@ export default function AddMaterial() {
                       minLength: { value: 3, message: "Title must be at least 3 characters" },
                     })}
                   />
-                </div>
+                </div> */}
                 {errors.title && (
                   <span style={{ color: "#ef4444", fontSize: "0.8rem", marginTop: "4px", display: "block" }}>
                     {errors.title.message}
@@ -195,29 +195,6 @@ export default function AddMaterial() {
               </div>
 
               <div className="form-row">
-                <div className="form-group">
-                  <label htmlFor="category">
-                    Category <span className="req">*</span>
-                  </label>
-                  <div className="input-wrapper">
-                    <select
-                      id="category"
-                      {...register("category", { required: "Category is required" })}
-                    >
-                      {CATEGORIES.map((cat) => (
-                        <option key={cat.id} value={cat.id}>
-                          {cat.label}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-                  {errors.category && (
-                    <span style={{ color: "#ef4444", fontSize: "0.8rem", marginTop: "4px", display: "block" }}>
-                      {errors.category.message}
-                    </span>
-                  )}
-                </div>
-
                 <div className="form-group">
                   <label htmlFor="brand">Brand / Manufacturer</label>
                   <div className="input-wrapper has-icon">
@@ -315,7 +292,7 @@ export default function AddMaterial() {
                   </div>
                 </div>
                 <div className="form-group">
-                  <label htmlFor="bulkPrice">Bulk Discount Price (100+ units)</label>
+                  <label htmlFor="bulkPrice">Bulk Discount Price</label>
                   <div className="input-wrapper has-icon">
                     <i className="fa-solid fa-tag prefix-icon"></i>
                     <input

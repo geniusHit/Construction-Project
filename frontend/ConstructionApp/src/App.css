@@ -977,14 +977,14 @@ a {
   color: #98a2b3;
 }
 
-.products{
+.products {
   display: grid;
   grid-template-columns: 25% 25% 25% 25%;
   padding: 14px 48px 0;
   margin: auto;
 }
 
-.quote-table td{
+.quote-table td {
   padding: 8px;
 }
 
@@ -996,10 +996,6 @@ a {
 
   .logo-area {
     min-width: auto;
-  }
-
-  .location-selector {
-    display: none;
   }
 
   .hero-content {
@@ -1031,9 +1027,6 @@ a {
 }
 
 @media (max-width: 900px) {
-  .navigation {
-    display: none;
-  }
 
   .header {
     justify-content: space-between;
@@ -1072,16 +1065,17 @@ a {
   .feature:nth-child(4) {
     border-top: 1px solid #e5e9f0;
   }
+
+  .location-selector {
+    display: none;
+  }
+
 }
 
 @media (max-width: 650px) {
   .header {
     height: auto;
     padding: 13px 18px;
-  }
-
-  .business-btn {
-    display: none;
   }
 
   .login-btn-nav {
