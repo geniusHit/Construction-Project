@@ -1,6 +1,4 @@
 const mongoose = require("mongoose")
-const jwt = require("jsonwebtoken")
-const SECRET = process.env.JWT_SECRET
 const nodemailer = require("nodemailer")
 const bcrypt = require("bcryptjs")
 
@@ -92,8 +90,6 @@ const loggedUsers = mongoose.Schema({
 const loggedUsersModel = mongoose.model("loggedUsers", loggedUsers)
 
 exports.loginUser = async (req, res) => {
-  console.log("req.body : ", req.body)
-
   try {
     const { email, password, expiry, IP } = req.body;
     const deletePreviousLogins = await loggedUsersModel.deleteMany({ IP: IP })
@@ -220,8 +216,6 @@ const materialSchema = new mongoose.Schema(
 
 const materialModel = mongoose.model("Material", materialSchema);
 exports.createMaterial = async (req, res) => {
-  console.log("req.body : ", req.body)
-
   try {
     const {
       title,
@@ -295,13 +289,10 @@ exports.getMaterials = async (req, res) => {
 
 exports.comparePrices = async (req, res) => {
   try {
-    console.log("req.body : ", req.body)
     const { text, category, pincode } = req.body;
     let getMaterials = [];
 
     if (text && category && pincode) {
-      console.log("all active")
-
       getMaterials = await materialModel.find({
         $or: [
           { title: { $regex: `${text}`, $options: 'i' } },
@@ -313,7 +304,6 @@ exports.comparePrices = async (req, res) => {
       })
     }
     else if (text) {
-      console.log("text active")
       getMaterials = await materialModel.find({
         $or: [
           { title: { $regex: `${text}`, $options: 'i' } },
@@ -322,7 +312,6 @@ exports.comparePrices = async (req, res) => {
       })
     }
     else if (category) {
-      console.log("category active")
       getMaterials = await materialModel.find({
         $or: [
           { title: { $regex: `${category}`, $options: 'i' } },
@@ -331,13 +320,10 @@ exports.comparePrices = async (req, res) => {
       })
     }
     else if (pincode) {
-      console.log("pincode active")
       getMaterials = await materialModel.find({
         "user.pincode": pincode
       })
     }
-
-    console.log(getMaterials)
 
     res.json(getMaterials)
   }
@@ -358,8 +344,6 @@ exports.recentProducts = async (req, res) => {
 
 exports.quoteRequest = async (req, res) => {
   try {
-    console.log("req.body : ", req.body)
-
     const auth = nodemailer.createTransport({
       service: "gmail",
       secure: true,

@@ -119,8 +119,6 @@ export default function AddMaterial() {
     setCurrentLogin(result)
   }
 
-  console.log("currentLogin : ", currentLogin)
-
   useEffect(() => {
     getIP()
   }, [])

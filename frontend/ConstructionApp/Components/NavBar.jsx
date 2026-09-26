@@ -38,8 +38,6 @@ const NavBar = () => {
         setIP(data.ip)
     };
 
-    console.log("currentLogin : ", currentLogin)
-
     const getLocation = () => {
         navigator.geolocation.getCurrentPosition(
             async (position) => {
@@ -50,8 +48,6 @@ const NavBar = () => {
                 );
 
                 const data = await response.json();
-                console.log("data from getLocation : ", data)
-
                 setLocation(data);
             },
             (error) => {
@@ -59,8 +55,6 @@ const NavBar = () => {
             }
         ); 
     };
-
-    console.log("location : ", location)
 
     return (
         <div>

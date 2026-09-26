@@ -135,7 +135,6 @@ function Hero({ searchKeys, setSearchKeys, products, setProducts }) {
     })
 
     const result = await compare.json()
-    console.log("result : ", result)
     setProducts(result)
   }
 
@@ -408,13 +407,10 @@ function MapPanel() {
 
 function SupplierList({ recentPr }) {
   const [quoteDetails, setQuoteDetails] = useState()
-  console.log("quoteDetails : ", quoteDetails)
   const [showMessage, setShowMessage] = useState(false)
   const { register, handleSubmit, formState: { errors } } = useForm()
 
   const requestQuote = async (data) => {
-    console.log("data : ", data)
-
     const request = await fetch(`${API_URL}/quote-request`, {
       method: "POST",
       headers: {
@@ -636,8 +632,6 @@ function Suppliers() {
     recentProds()
   }, [])
 
-  console.log(recentPr)
-
   return (
     <section className="suppliers-section" id="suppliers">
       <div className="section-heading">
@@ -816,10 +810,7 @@ const Home = () => {
     category: "",
     pincode: ""
   })
-  const [location, setLocation] = useState()
   const [products, setProducts] = useState()
-  console.log("products : ", products)
-  console.log("searchKeys : ", searchKeys)
 
   return (
     <div>

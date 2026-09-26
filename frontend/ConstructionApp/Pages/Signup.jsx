@@ -12,7 +12,7 @@ const Signup = () => {
         window.location.hostname === "localhost"
             ? "http://localhost:8001"
             : "https://construction-project-gll3.vercel.app/";
-            
+
     const { register, handleSubmit, formState: { errors } } = useForm({
         defaultValues: {
             otp: ""
@@ -37,7 +37,6 @@ const Signup = () => {
     // }
 
     const submit = async (data) => {
-        console.log("data : ", data)
         setUserData(data)
 
         let expiry = new Date();

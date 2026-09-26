@@ -25,7 +25,6 @@ const Login = () => {
     };
 
     const submit = async (data) => {
-        console.log("data = ", data)
         let expiry = new Date();
         expiry.setDate(expiry.getDate() + 1);
 
@@ -38,7 +37,6 @@ const Login = () => {
         })
 
         const result = await login.json()
-        console.log("result : ", result)
         
         if (result?.success !== true) {
             setError("password", {
