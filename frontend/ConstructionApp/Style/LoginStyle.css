@@ -41,8 +41,6 @@ body {
     width: 100%;
 }
 
-/* Container Wrapper */
-
 .login-container {
     display: flex;
     width: 100%;
@@ -53,8 +51,6 @@ body {
     border: 1px solid var(--border-color);
     box-shadow: var(--shadow-md);
 }
-
-/* Left Hero Section */
 
 .login-left {
     flex: 1.1;
@@ -113,8 +109,6 @@ body {
     max-width: 440px;
 }
 
-/* Right Login Card */
-
 .login-card {
     flex: 0.9;
     max-width: 480px;
@@ -138,8 +132,6 @@ body {
     font-size: 0.95rem;
     margin-bottom: 28px;
 }
-
-/* Input Styles */
 
 .input-group {
     margin-bottom: 20px;
@@ -190,8 +182,6 @@ body {
     color: #94a3b8;
 }
 
-/* Options */
-
 .login-options {
     display: flex;
     justify-content: space-between;
@@ -229,8 +219,6 @@ body {
     text-decoration: underline;
 }
 
-/* Buttons */
-
 .login-btn {
     width: 100%;
     border: none;
@@ -254,8 +242,6 @@ body {
     background: var(--primary-hover);
     box-shadow: 0 4px 8px rgba(26, 86, 219, 0.3);
 }
-
-/* Divider */
 
 .divider {
     text-align: center;
@@ -281,8 +267,6 @@ body {
     color: var(--text-muted);
     font-weight: 500;
 }
-
-/* Social Login */
 
 .social-btn {
     width: 100%;
@@ -325,8 +309,6 @@ body {
     text-decoration: underline;
 }
 
-/* Feature Value Props (Below Card) */
-
 .features {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -363,8 +345,6 @@ body {
     color: var(--text-muted);
 }
 
-/* Footer & Micro-bar */
-
 .copyright {
     margin-top: 40px;
     background: transparent;
@@ -374,8 +354,6 @@ body {
     padding: 16px;
     border-top: 1px solid var(--border-color);
 }
-
-/* Responsive Breakpoints */
 
 @media (max-width: 992px) {
     .login-container {

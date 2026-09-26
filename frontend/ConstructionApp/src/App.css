@@ -37,10 +37,6 @@ a {
   color: inherit;
 }
 
-/* =========================
-   HEADER
-========================= */
-
 .header {
   height: 74px;
   padding: 0 48px;
@@ -146,16 +142,6 @@ a {
   background: white;
 }
 
-/* .login-btn {
-  color: white;
-  border: 1px solid var(--primary-dark);
-  background: var(--primary-dark);
-} */
-
-/* =========================
-   HERO
-========================= */
-
 .hero {
   position: relative;
   min-height: 258px;
@@ -243,8 +229,6 @@ a {
   line-height: 1.65;
   color: #263b5b;
 }
-
-/* Search Card */
 
 .search-card {
   background: rgba(255, 255, 255, 0.96);
@@ -365,10 +349,6 @@ a {
   gap: 25px;
 }
 
-/* =========================
-   GENERAL SECTIONS
-========================= */
-
 .market-section {
   padding: 14px 48px 0;
   max-width: 1500px;
@@ -408,10 +388,6 @@ a {
   border-radius: 50%;
   margin-right: 6px;
 }
-
-/* =========================
-   MARKET CARDS
-========================= */
 
 .market-grid {
   display: grid;
@@ -504,10 +480,6 @@ a {
   color: #ef4444;
 }
 
-/* =========================
-   DASHBOARD GRID
-========================= */
-
 .dashboard-grid {
   max-width: 1500px;
   margin: 28px auto 0;
@@ -522,10 +494,6 @@ a {
 .bulk-section {
   min-width: 0;
 }
-
-/* =========================
-   SUPPLIER PANEL
-========================= */
 
 .supplier-content {
   border: 1px solid #e5e9f0;
@@ -777,10 +745,6 @@ a {
   color: white;
 }
 
-/* =========================
-   PRICE TRENDS
-========================= */
-
 .trend-list {
   border: 1px solid #e5e9f0;
   border-radius: 9px;
@@ -869,10 +833,6 @@ a {
   font-weight: 700;
 }
 
-/* =========================
-   BULK QUOTE
-========================= */
-
 .bulk-section {
   border-radius: 9px;
   padding: 17px;
@@ -944,10 +904,6 @@ a {
   margin-top: 2px;
 }
 
-/* =========================
-   FEATURES
-========================= */
-
 .features {
   max-width: 1400px;
   margin: 20px auto 0;
@@ -1007,10 +963,6 @@ a {
   line-height: 1.4;
 }
 
-/* =========================
-   FOOTER
-========================= */
-
 .footer {
   height: 54px;
   display: flex;
@@ -1024,10 +976,6 @@ a {
 .footer b {
   color: #98a2b3;
 }
-
-/* =========================
-   RESPONSIVE
-========================= */
 
 .products{
   display: grid;

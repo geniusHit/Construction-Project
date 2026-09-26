@@ -20,7 +20,6 @@
   font-family: 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
-/* Navbar */
 .navbar {
   background: #ffffff;
   border-bottom: 1px solid var(--border-color);
@@ -148,7 +147,6 @@
   color: var(--primary);
 }
 
-/* Page Container */
 .page-wrapper {
   max-width: 1240px;
   margin: 32px auto 60px;
@@ -182,7 +180,6 @@
   margin-top: 4px;
 }
 
-/* Form Layout */
 .grid-container {
   display: grid;
   grid-template-columns: 1fr 340px;
@@ -291,7 +288,6 @@ textarea {
   min-height: 95px;
 }
 
-/* Category Quick Tags */
 .quick-tags {
   display: flex;
   flex-wrap: wrap;
@@ -319,7 +315,6 @@ textarea {
   font-weight: 600;
 }
 
-/* Upload Zone */
 .upload-zone {
   display: block;
   border: 2px dashed #cbd5e1;
@@ -392,7 +387,6 @@ textarea {
   font-size: 0.7rem;
 }
 
-/* Sidebar & Preview Card */
 .sidebar-sticky {
   position: sticky;
   top: 90px;
@@ -478,7 +472,6 @@ textarea {
   color: var(--text-main);
 }
 
-/* Action Buttons */
 .btn-submit {
   width: 100%;
   background: var(--primary);
@@ -515,7 +508,6 @@ textarea {
   font-family: inherit;
 }
 
-/* Responsive */
 @media (max-width: 960px) {
   .grid-container {
     grid-template-columns: 1fr;

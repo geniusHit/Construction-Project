@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import {
     FaArrowRight,
 } from "react-icons/fa";
@@ -24,17 +24,6 @@ const Signup = () => {
     const [showOtp, setShowOtp] = useState(false)
     const [userData, setUserData] = useState()
     const [otp, setOtp] = useState()
-
-    // const { watch, register, handleSubmit } = useForm()
-    // const submit = async (data) => {
-    //     const addUser = await fetch(`http://localhost:8001/add-user`, {
-    //         method: "POST",
-    //         headers: {
-    //             "Content-Type": "application/json"
-    //         },
-    //         body: JSON.stringify(data)
-    //     })
-    // }
 
     const submit = async (data) => {
         setUserData(data)
@@ -86,7 +75,6 @@ const Signup = () => {
         userData !== undefined && (setDisableSignup(true), setShowOtp(true));
     }, [userData])
 
-
     useEffect(() => {
         getIP()
     }, [])
@@ -126,7 +114,6 @@ const Signup = () => {
                         <div className="overlay-content">
                             <Link to="/">
                                 <div className="logo">
-                                    {/* <img src={Logo} width="200" /> */}
                                 </div>
                             </Link>
 

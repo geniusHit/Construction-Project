@@ -1,17 +1,19 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import {
     FaArrowRight,
 } from "react-icons/fa";
 import { useForm } from "react-hook-form"
 import { useNavigate } from "react-router-dom"
-// import "../Style/LoginStyle.css";
-// import Logo from '../assets/Logo.png'
 import { Link } from "react-router-dom"
 import Footer from "../Components/Footer";
 
 const Login = () => {
+    const API_URL =
+    window.location.hostname === "localhost"
+      ? "http://localhost:8001"
+      : "https://construction-project-gll3.vercel.app";
+
     const { register, handleSubmit, formState: {errors}, setError } = useForm()
-    const [isLogin, setIsLogin] = useState(false)
     const [IP, setIP] = useState("")
     const navigate = useNavigate()
 
@@ -28,7 +30,7 @@ const Login = () => {
         let expiry = new Date();
         expiry.setDate(expiry.getDate() + 1);
 
-        const login = await fetch("http://localhost:8001/login-user", {
+        const login = await fetch(`${API_URL}/login-user`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -51,14 +53,9 @@ const Login = () => {
     return (
         <>
             <div className="login-page">
-                {/* Hero Section */}
                 <div className="login-container">
 
-                    {/* Left Side */}
-                    <div
-                        className="login-left"
-                    >
-
+                    <div className="login-left">
                         <br />
                         <Link to="/">
                             <div className="logo-area">
@@ -94,7 +91,6 @@ const Login = () => {
                         </div>
                     </div>
 
-                    {/* Right Side */}
                     <div className="login-box">
                         <div className="login-card">
 
